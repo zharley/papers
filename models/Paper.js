@@ -22,5 +22,6 @@ Paper.add({
 /**
  * Registration
  */
-Paper.defaultColumns = 'name';
+Paper.defaultColumns = 'title, authors';
+Paper.mappings = { name: 'title' };
 Paper.register();
