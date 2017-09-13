@@ -8,8 +8,7 @@ var Types = keystone.Field.Types;
 var Author = new keystone.List('Author');
 
 Author.add({
-  firstName: { type: Types.Text, initial: true, required: true, index: true },
-  lastName: { type: Types.Text, initial: true, required: true, index: true },
+  name: { type: Types.Name, initial: true, required: true, index: true },
   email: { type: Types.Email },
   affiliations: { type: Types.Relationship, ref: 'Organization', many: true },
 });
@@ -17,5 +16,5 @@ Author.add({
 /**
  * Registration
  */
-Author.defaultColumns = 'firstName, lastName';
+Author.defaultColumns = 'name, affiliations';
 Author.register();
