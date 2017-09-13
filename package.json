@@ -19,5 +19,6 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node keystone.js"
-  }
+  },
+  "main": "keystone.js"
 }
