@@ -18,6 +18,7 @@ keystone.init({
   'favicon': 'public/favicon.ico',
   'views': 'templates/views',
   'view engine': 'pug',
+  'admin path': 'library',
 
   'auto update': true,
   'session': true,
@@ -44,6 +45,7 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
+  content: ['papers', 'authors', 'organizations'],
   users: 'users',
 });
 
