@@ -8,9 +8,9 @@ var Types = keystone.Field.Types;
 var Author = new keystone.List('Author');
 
 Author.add({
-  name: { type: Types.Name, initial: true, required: true, index: true },
-  email: { type: Types.Email },
-  affiliations: { type: Types.Relationship, ref: 'Organization', many: true },
+  name: { type: Types.Text, initial: true, required: true, index: true },
+  email: { type: Types.Email, initial: true },
+  affiliations: { type: Types.Relationship, ref: 'Organization', many: true, initial: true, createInline: true },
 });
 
 /**
