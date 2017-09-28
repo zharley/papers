@@ -1,0 +1,62 @@
+extends ../layouts/default
+
+block content
+	if !paper
+		.jumbotron.text-center
+			h2 Invalid paper...
+			p.lead Please check the url and try again
+	else
+		.row
+			.col-md-8.col-md-offset-2
+				p: a(href='/').text-muted &larr; back to the list
+				hr
+				article
+					header
+						h1= paper.title
+						div
+							p.text-muted.text-small Published 
+								if paper.publishDate
+									| on 
+									time(datetime=paper.publishDate)=paper._.publishDate.format('MMMM Do, YYYY')
+								if paper.authors && paper.authors.length
+									|  by 
+									each author, author_i in paper.authors
+										a(href='/author/' + author.key)= author.name
+										if author_i < paper.authors.length - 1
+											| , 
+										else
+											|  
+						hr
+						h2 Summary
+						!= paper.summary.html
+						hr
+						h2 Input
+						!= paper.input.html
+						hr
+						h2 Output
+						!= paper.output.html
+						hr
+						h2 Method
+						!= paper.method.html
+						hr
+						h2 Results
+						!= paper.results.html
+						hr
+						h2 Extra
+						!= paper.extra.html
+						hr
+						h2 Uploads
+						if paper.uploads && paper.uploads.length
+							each upload, upload_i in paper.uploads
+								.col-xs-4.col-sm-3.col-md-2(style="margin-bottom: 30px;")
+									if (/\.(gif|jpg|jpeg|tiff|png)$/i).test(upload.file.filename)
+										a(href='/uploads/' + upload.file.filename, title=upload.label).gallery-image
+											img(src='/uploads/' + upload.file.filename)
+									else
+										a(href='/uploads/' + upload.file.filename, title=upload.label)
+											span.glyphicon.glyphicon-paperclip
+											|   
+											!= upload.label
+											|  (
+											!= /(?:\.([^.]+))?$/.exec(upload.file.filename)[1]
+											| )
