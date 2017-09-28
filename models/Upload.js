@@ -10,12 +10,9 @@ var Upload = new keystone.List('Upload');
 var storage = new keystone.Storage({
   adapter: keystone.Storage.Adapters.FS,
   fs: {
-    path: keystone.expandPath('./uploads'), // required; path where the files should be stored
+    path: keystone.expandPath('./public/uploads'), // required; path where the files should be stored
     publicPath: '/public/uploads', // path where files will be served
   },
-  format: function(item, file){
-    return '<img src="/files/'+file.filename+'" style="max-width: 300px">'
-  }
 });
 
 
@@ -28,4 +25,5 @@ Upload.add({
  * Registration
  */
 Upload.defaultColumns = 'label, file';
+Upload.mappings = { name: 'label' };
 Upload.register();
