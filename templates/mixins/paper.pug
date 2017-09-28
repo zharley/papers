@@ -1,0 +1,22 @@
+mixin paper(paper)
+	article(data-ks-editable=editable(user, { list: 'Paper', id: paper.id })).media
+		.media-left
+			a(href='/paper/' + paper.key)
+				span.glyphicon.glyphicon-file.media-object
+				
+		.media-body
+			h3.media-heading
+				a(href='/paper/' + paper.id)= paper.title
+			if paper.publishDate || paper.authors
+				p.text-muted.text-small
+					if paper.publishDate
+						time= paper._.publishDate.format('MMMM Do, YYYY')
+						|  
+					if paper.authors && paper.authors.length
+						|  by 
+						each author, author_i in paper.authors
+							a(href='/author/' + author.key)= author.name
+							if author_i < paper.authors.length - 1
+								| , 
+							else
+								|  

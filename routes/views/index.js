@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var Paper = keystone.list('Paper');
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res);
@@ -7,6 +8,19 @@ exports = module.exports = function (req, res) {
   // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'home';
+
+  view.on('init', function (next) {
+    Paper.model.find().sort('name').populate('authors').exec(function (err, results) {
+      if (err || !results.length) {
+        return next(err);
+      }
+
+      locals.papers = results;
+
+      next(err);
+    });
+
+  });
 
   // Render the view
   view.render('index');

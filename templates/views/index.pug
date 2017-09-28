@@ -1,6 +1,40 @@
 extends ../layouts/default
+include ../mixins/paper
 
 block content
 	.container: .jumbotron
-		h1 Home Page
-		p Nothing here yet.
+		h1 Papers
+		if papers.length
+			if papers.totalPages > 1
+				.lead.text-muted Showing 
+					strong #{papers.first}
+					|  to 
+					strong #{papers.last}
+					|  of 
+					strong #{papers.total}
+					|  papers
+			else
+				.lead.text-muted Showing #{utils.plural(papers.length, '* paper')}
+			.blog
+				each paper in papers
+					+paper(paper)
+			if papers.totalPages > 1
+				ul.pagination
+					if papers.previous
+						li: a(href='?page=' + papers.previous): span.glyphicon.glyphicon-chevron-left
+					else
+						li.disabled: a(href='?page=' + 1): span.glyphicon.glyphicon-chevron-left
+					each p, i in papers.pages
+						li(class=papers.currentPage === p ? 'active' : null)
+							a(href='?page=' + (p === '...' ? (i ? papers.totalPages : 1) : p ))= p
+					if papers.next
+						li: a(href='?page=' + papers.next): span.glyphicon.glyphicon-chevron-right
+					else
+						li.disabled: a(href='?page=' + papers.totalPages): span.glyphicon.glyphicon-chevron-right
+		else
+			if category
+				.jumbotron.text-center
+					h3(style="margin-bottom:0;margin-top:0;") No papers in the category #{category.name}.
+			else
+				.jumbotron.text-center
+					h3(style="margin-bottom:0;margin-top:0;") There are no papers yet.
