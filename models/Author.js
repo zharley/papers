@@ -16,5 +16,6 @@ Author.add({
 /**
  * Registration
  */
+Author.relationship({ path: 'papers', ref: 'Paper', refPath: 'authors' });
 Author.defaultColumns = 'name, affiliations';
 Author.register();

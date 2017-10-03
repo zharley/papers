@@ -5,7 +5,10 @@ var Types = keystone.Field.Types;
  * Paper Model
  * ==========
  */
-var Paper = new keystone.List('Paper');
+var Paper = new keystone.List('Paper', {
+  searchFields: 'title summary input output method results extra',
+  drilldown: 'authors',
+});
 
 Paper.add({
   title: { type: Types.Text, required: true, initial: true, index: true },
