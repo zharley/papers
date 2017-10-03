@@ -17,11 +17,11 @@ block content
 							p.text-muted.text-small Published 
 								if paper.publishDate
 									| on 
-									time(datetime=paper.publishDate)=paper._.publishDate.format('MMMM Do, YYYY')
+									time(datetime=paper.publishDate)=result._.publishDate.format('MMMM Do, YYYY')
 								if paper.authors && paper.authors.length
 									|  by 
 									each author, author_i in paper.authors
-										a(href='/author/' + author.key)= author.name
+										a(href='/library/authors/' + author._id)= author.name
 										if author_i < paper.authors.length - 1
 											| , 
 										else

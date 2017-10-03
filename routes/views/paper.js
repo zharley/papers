@@ -1,5 +1,9 @@
 var keystone = require('keystone');
+var md = require('markdown-it')();
+var mk = require('markdown-it-katex');
 var Paper = keystone.list('Paper');
+
+md.use(mk);
 
 exports = module.exports = function (req, res) {
   var view = new keystone.View(req, res);
@@ -18,7 +22,17 @@ exports = module.exports = function (req, res) {
     }).populate('authors  uploads');
 
     q.exec(function (err, result) {
-      locals.paper = result;
+      var paper = result.toObject();
+      Object.keys(paper).forEach(function (key) {
+        var value = paper[key];
+
+        if (value && typeof value === 'object' && value.md && value.html) {
+          value.html = md.render(value.md);
+        }
+      });
+
+      locals.result = result;
+      locals.paper = paper;
       next(err);
     });
   });
